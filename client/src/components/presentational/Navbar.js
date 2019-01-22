@@ -6,13 +6,20 @@ import {
   Icon,
   Segment,
   Label,
-  Modal
+  Modal,
+  Embed
 } from 'semantic-ui-react';
 
 class Navbar extends React.Component {
   state = {
     activeItem: "",
-    menuIconNames : ["id badge outline", "linkedin", "github square", "list alternate", "mail"],
+    menuIconNames : [
+      {name:"id badge outline", link:"/", target:"#"},
+      {name:"linkedin", link:"https://www.linkedin.com/in/arturo-salmeron-7a538b53/", target:"_blank"},
+      {name:"github sqaure", link:"https://www.github.com/asalmeron3", target:"_blank"},
+      {name:"list alternate", link:"/", target:"#"},
+      {name:"mail", link:"/", target:"#"}  
+    ],
     menuName: ["About Me", "LinkedIn", "GitHub", "Resume", "Email"],
     isModalOpen: false
   }
@@ -41,15 +48,25 @@ class Navbar extends React.Component {
         <Grid>
           <Grid.Row only='computer'>
             <Menu inverted vertical borderless size='large' style={{width:"100%"}}>
-              {this.state.menuIconNames.map((name, i) => 
-                <Menu.Item key={i} name={name} onClick={this.itemClicked} link><Icon name={name} size="large"/>{this.state.menuName[i]}</Menu.Item>
+              {this.state.menuIconNames.map((each, i) => 
+                <a href={each.link} target={each.target}>
+                  <Menu.Item key={i} name={each.name} onClick={this.itemClicked} link>
+                    <Icon name={each.name} size="large"/>
+                    {this.state.menuName[i]}
+                  </Menu.Item>
+                </a>
               )}
             </Menu>
           </Grid.Row>
           <Grid.Row only='mobile tablet'>
             <Menu inverted borderless icon="labeled">
-              {this.state.menuIconNames.map((name, i) => 
-                <Menu.Item key={i} name={name} onClick={this.itemClicked} link><Icon name={name}/>{this.state.menuName[i]}</Menu.Item>
+              {this.state.menuIconNames.map((each, i) =>
+                <a href={each.link} target={each.target}>
+                  <Menu.Item key={i} name={each.name} onClick={this.itemClicked} link>
+                    <Icon name={each.name} size="large"/>
+                    {this.state.menuName[i]}
+                  </Menu.Item>
+                </a>
               )}
             </Menu>
           </Grid.Row>
@@ -57,14 +74,23 @@ class Navbar extends React.Component {
           <Modal size="small" open={this.state.isModalOpen} onClose={this.closeModal}>
             <Modal.Header>Arturo Salmeron</Modal.Header>
             <Modal.Content>
-              {this.state.activeItem == "list alternate" 
-                ? <Image wrapped size="medium" src={"Headshot_squared.png"}/>
+              {this.state.activeItem === "list alternate" 
+                ? <Image wrapped size="medium" src={"Resume.png"}/>
                 : <div>
-                    <h2>Arturo Salmeron</h2>
-                    <p>This is the section for things about me.</p>
-                    <p>More things here.</p>
-                    <p>And more things here.</p>
-                  </div>
+                  <p>I am a full stack web developer trained through Georgia Tech's web development bootcamp. After completing the 
+                    bootcamp, I continued to learn more skills independently. I later became a teaching assistant for the coding 
+                    program where I helped other students learn how to code and work through problems. In addition to tutoring, I 
+                    also helped found a start-up called TrashTalks. During my time with the start-up, I learned the foundations for 
+                    starting a business and helped TrashTalks build their website and build out a few web app ideas. 
+                  </p>
+                  <p>
+                    During my time as both a teaching assistant for the bootcamp and a developer for TrashTalks, I have learned how
+                    to communicate and ask questions when concerning overall goals and designs for a web app. This helps both me and 
+                    the developer I'm assisiting break down how to approach the problem. Additionally, being in a teaching assistant
+                    role has taught me to feel comfortable saying "I don't know but let's ask Google". And oftentimes, both the student
+                    and myself learn something knew and learn that it's ok to not know everything.
+                  </p>
+                </div>
               }
             </Modal.Content>
           </Modal>
